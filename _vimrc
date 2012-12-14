@@ -748,3 +748,8 @@ let g:ctrlp_follow_symlinks=1
 
 " ctags跳转
 " <C-]>函数定义处 <C-t>返回 <C-o>
+
+" latex
+set shellslash
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
