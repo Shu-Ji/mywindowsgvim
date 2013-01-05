@@ -67,3 +67,4 @@ augroup indent_guides
 
   autocmd BufEnter,WinEnter * call indent_guides#process_autocmds()
 augroup END
+call indent_guides#toggle()
