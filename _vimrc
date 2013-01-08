@@ -395,10 +395,6 @@ map <leader>s? z=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""
-" => Yank Ring
-""""""""""""""""""""""""""""""
-map <leader>y :YRShow<cr>
  
 """"""""""""""""""""""""""""""
 " => File explorer
@@ -559,11 +555,6 @@ set backspace=2     "退格键可以删除任何东西
 set list
 set list listchars=tab:<+
 
-"映射常用操作
-map [r :w <CR>:! python % <CR>
-map [o :! python -i % <CR>
-map [t :! rst2html.py % %<.html <CR>
-
 if has("gui_running")
     set lines=25
     set columns=80
@@ -624,6 +615,7 @@ map <silent> <F5> :if &guioptions =~# 'T' <Bar>
     \endif<CR>
     
 call pathogen#infect()
+call pathogen#helptags()
 
 map <F4> :NERDTree<CR>
 map <F6> :NERDTreeToggle<CR>
@@ -666,8 +658,8 @@ let g:pymode_rope_autoimport_generate = 1
 let g:pymode_rope_autoimport_generate = 1
 let g:pymode_rope_autoimport_underlineds = 0
 let g:pymode_rope_codeassist_maxfixes = 10
-let g:pymode_rope_sorted_completions = 0
-let g:pymode_rope_extended_complete = 0
+let g:pymode_rope_sorted_completions = 1
+let g:pymode_rope_extended_complete = 1
 let g:pymode_rope_autoimport_modules = ["os","shutil","datetime"]
 let g:pymode_rope_confirm_saving = 1
 let g:pymode_rope_global_prefix = "<C-x>p"
@@ -676,7 +668,8 @@ let g:pymode_rope_vim_completion = 0
 let g:pymode_rope_guess_project = 0
 let g:pymode_rope_goto_def_newwin = ""
 let g:pymode_rope_always_show_complete_menu = 0
-let g:pymode_lint = 0
+
+let g:pymode_lint = 1
 " Switch pylint, pyflakes, pep8, mccabe code-checkers
 " Can have multiply values "pep8,pyflakes,mcccabe"
 let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
@@ -753,3 +746,71 @@ let g:ctrlp_follow_symlinks=1
 set shellslash
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
+
+" python
+map [r :w <CR>:! python % <CR>
+map [o :! python -i % <CR>
+map [t :! rst2html.py % %<.html <CR>
+
+" 打开寄存器
+map <leader>r :reg<cr>
+" pymode默认的<leader>r为运行当前py文件，所以修改一下
+let g:pymode_run_key = '<leader>py'
+
+" zencoding
+map <leader>z <c-y>,
+
+
+
+" Define keyword. 
+if !exists('g:neocomplcache_keyword_patterns') 
+    let g:neocomplcache_keyword_patterns = {} 
+endif 
+let g:neocomplcache_keyword_patterns['default'] = 'hw*' 
+" Plugin key-mappings. 
+imap <C-k>     <Plug>(neocomplcache_snippets_expand) 
+smap <C-k>     <Plug>(neocomplcache_snippets_expand) 
+inoremap <expr><C-g>     neocomplcache#undo_completion() 
+inoremap <expr><C-l>     neocomplcache#complete_common_string() 
+
+" SuperTab like snippets behavior. 
+"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "<C-n>" : "<TAB>" 
+
+" Recommended key-mappings
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y> neocomplcache#close_popup()
+inoremap <expr><C-e> neocomplcache#cancel_popup()
+
+" AutoComplPop like behavior. 
+"let g:neocomplcache_enable_auto_select = 1 
+
+" Shell like behavior(not recommended). 
+"set completeopt+=longest 
+"let g:neocomplcache_enable_auto_select = 1 
+"let g:neocomplcache_disable_auto_complete = 1 
+"inoremap <expr><TAB>  pumvisible() ? "<Down>" : "<TAB>" 
+"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "<CR>" 
+
+" Enable omni completion. 
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete 
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
+
+" Enable heavy omni completion. 
+if !exists('g:neocomplcache_omni_patterns') 
+let g:neocomplcache_omni_patterns = {} 
+endif 
+let g:neocomplcache_omni_patterns.ruby = '[^. *t].w*|hw*::' 
+"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete 
+let g:neocomplcache_omni_patterns.php = '[^. t]->hw*|hw*::'
