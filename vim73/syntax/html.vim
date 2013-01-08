@@ -290,3 +290,4 @@ if main_syntax == 'html'
 endif
 
 " vim: ts=8
+
