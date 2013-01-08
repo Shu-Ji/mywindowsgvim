@@ -759,9 +759,11 @@ let g:pymode_run_key = '<leader>py'
 
 " zencoding
 map <leader>z <c-y>,
+" powerline 显示绝对全路径
+let g:Powerline_stl_path_style = 'full'
 
 
-
+" 自动完成[tab]键
 " Define keyword. 
 if !exists('g:neocomplcache_keyword_patterns') 
     let g:neocomplcache_keyword_patterns = {} 
