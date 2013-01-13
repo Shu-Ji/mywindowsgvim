@@ -655,12 +655,11 @@ let g:pymode_rope_auto_project = 1
 let g:pymode_rope_enable_autoimport = 1
 " Auto generate global cache
 let g:pymode_rope_autoimport_generate = 1
-let g:pymode_rope_autoimport_generate = 1
-let g:pymode_rope_autoimport_underlineds = 0
+let g:pymode_rope_autoimport_underlineds = 1
 let g:pymode_rope_codeassist_maxfixes = 10
 let g:pymode_rope_sorted_completions = 1
 let g:pymode_rope_extended_complete = 1
-let g:pymode_rope_autoimport_modules = ["os","shutil","datetime"]
+let g:pymode_rope_autoimport_modules = ["os","shutil","datetime","re","urllib","urllib2"]
 let g:pymode_rope_confirm_saving = 1
 let g:pymode_rope_global_prefix = "<C-x>p"
 let g:pymode_rope_local_prefix = "<C-c>r"
@@ -674,10 +673,15 @@ let g:pymode_lint = 1
 " Can have multiply values "pep8,pyflakes,mcccabe"
 let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
 
-
 "zc是折叠代码的命令，zo是展开代码,shift+k，查看光标处的函数的文档
 " 但是pymode提供的折叠好像有问题，将其禁用，用python_edit.vim代替
 let pymode_folding = 0
+
+" pymode的跳转到函数定义处Ctrl c放开后按g，重新定义为Ctrl g了
+map <C-g> <C-c>g
+
+" 自动import g:pymode_rope_autoimport_modules中定义的但是当前py文件还没有import的
+map <leader>im :RopeAutoImport<cr>
 
 " django
 au FileType python set ft=python.django
@@ -766,59 +770,13 @@ map <leader>z <c-y>,
 " powerline 显示绝对全路径
 let g:Powerline_stl_path_style = 'full'
 
-
 " 自动完成[tab]键
-" Define keyword. 
-if !exists('g:neocomplcache_keyword_patterns') 
-    let g:neocomplcache_keyword_patterns = {} 
-endif 
-let g:neocomplcache_keyword_patterns['default'] = 'hw*' 
-" Plugin key-mappings. 
-imap <C-k>     <Plug>(neocomplcache_snippets_expand) 
-smap <C-k>     <Plug>(neocomplcache_snippets_expand) 
-inoremap <expr><C-g>     neocomplcache#undo_completion() 
-inoremap <expr><C-l>     neocomplcache#complete_common_string() 
-
-" SuperTab like snippets behavior. 
-"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "<C-n>" : "<TAB>" 
-
-" Recommended key-mappings
-
-" <CR>: close popup and save indent.
-"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-endfunction
-
-" <TAB>: completion
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y> neocomplcache#close_popup()
-inoremap <expr><C-e> neocomplcache#cancel_popup()
-
-" AutoComplPop like behavior. 
-"let g:neocomplcache_enable_auto_select = 1 
-
-" Shell like behavior(not recommended). 
-"set completeopt+=longest 
-"let g:neocomplcache_enable_auto_select = 1 
-"let g:neocomplcache_disable_auto_complete = 1 
-"inoremap <expr><TAB>  pumvisible() ? "<Down>" : "<TAB>" 
-"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "<CR>" 
-
 " Enable omni completion. 
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete 
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
-
-" Enable heavy omni completion. 
-if !exists('g:neocomplcache_omni_patterns') 
-let g:neocomplcache_omni_patterns = {} 
-endif
 
 set guioptions-=L " 隐藏左侧滚动条 
 set guioptions-=r " 隐藏右侧滚动条
