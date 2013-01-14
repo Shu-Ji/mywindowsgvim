@@ -1,13 +1,16 @@
-set nocompatible    "·Ç¼æÈİÄ£Ê½
-syntax on           "¿ªÆôÓï·¨¸ßÁÁ
-set mouse=a         "¿ØÖÆÌ¨ÆôÓÃÊó±ê
-set cursorline      "¸ßÁÁµ±Ç°ĞĞ±³¾°
-set backspace=2     "ÍË¸ñ¼ü¿ÉÒÔÉ¾³ıÈÎºÎ¶«Î÷
-set incsearch       "ÔöÁ¿ËÑË÷
-set magic           "Ê¹ÓÃÕıÔòÊ±£¬³ıÁË$ . * ^ÒÔÍâµÄÔª×Ö·û¶¼Òª¼Ó·´Ğ±Ïß
-set hlsearch        "ËÑË÷Ê±¸ßÁÁÏÔÊ¾
-set nobackup        "ÎŞ±¸·İ
+set nocompatible    "éå…¼å®¹æ¨¡å¼
+syntax on           "å¼€å¯è¯­æ³•é«˜äº®
+set mouse=a         "æ§åˆ¶å°å¯ç”¨é¼ æ ‡
+set cursorline      "é«˜äº®å½“å‰è¡ŒèƒŒæ™¯
+set backspace=2     "é€€æ ¼é”®å¯ä»¥åˆ é™¤ä»»ä½•ä¸œè¥¿
+set incsearch       "å¢é‡æœç´¢
+set magic           "ä½¿ç”¨æ­£åˆ™æ—¶ï¼Œé™¤äº†$ . * ^ä»¥å¤–çš„å…ƒå­—ç¬¦éƒ½è¦åŠ åæ–œçº¿
+set hlsearch        "æœç´¢æ—¶é«˜äº®æ˜¾ç¤º
+set nobackup        "æ— å¤‡ä»½
 set history=400
+
+" è‡ªåŠ¨é‡æ–°åŠ è½½vimrcæ–‡ä»¶
+autocmd! bufwritepost _vimrc source %
 
 filetype on
 filetype plugin on
@@ -17,15 +20,15 @@ filetype indent on
 let mapleader = ";"
 let g:mapleader = ";"
 
-" ¿ìËÙ±£´æ
+" å¿«é€Ÿä¿å­˜
 nmap <leader>w :w!<cr>
 
 if exists("&ambiwidth")
     set ambiwidth=double
 endif
 
-"Ê¹gvimÆô¶¯Ê±×î´ó»¯
-au GUIEnter * simalt ~x
+"ä½¿gvimå¯åŠ¨æ—¶æœ€å¤§åŒ–
+"au GUIEnter * simalt ~x
 
 "Favorite filetype
 set ffs=unix,dos,mac
@@ -144,13 +147,15 @@ set nowb
 " => Folding
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Enable folding, I find it very useful
-if exists("&foldenable")
-    set fen
-endif
-
-if exists("&foldlevel")
-    set fdl=0
-endif
+set foldenable
+"set foldlevel=0
+set foldmarker={,}  "ç¼©è¿›ç¬¦å·
+set foldmethod=indent   "ç¼©è¿›ä½œä¸ºæŠ˜å æ ‡è¯†
+set foldlevel=100   "ä¸è‡ªåŠ¨æŠ˜å 
+set foldopen-=search    "æœç´¢æ—¶ä¸æ‰“å¼€æŠ˜å 
+set foldopen-=undo  "æ’¤é”€æ—¶ä¸æ‰“å¼€æŠ˜å 
+" ç©ºæ ¼é”®è¿›è¡ŒæŠ˜å 
+nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
 
 """"""""""""""""""""""""""""""
@@ -158,10 +163,8 @@ endif
 """"""""""""""""""""""""""""""
 "Auto indent
 set ai
-
 "Smart indet
 set si
-
 "C-style indenting
 set cindent
 
@@ -186,13 +189,6 @@ let g:miniBufExplModSelTarget = 1
 map <c-w><c-t> :WMToggle<cr>
 
 let g:bufExplorerSortBy = "name"
-
-
-""""""""""""""""""""""""""""""
-" => Tag list (ctags) - not used
-""""""""""""""""""""""""""""""
-map <F3> :Tlist<cr>
-
 
 """"""""""""""""""""""""""""""
 " => LaTeX Suite thing
@@ -235,7 +231,7 @@ let use_xhtml = 1
 " => MISC
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Remove the Windows ^M
-noremap <Leader>m :%s/r//g<CR>
+"noremap <Leader>m :%s/r//g<CR>
 
 "Paste toggle - when pasting something in, don't indent.
 "set pastetoggle=<F3>
@@ -246,28 +242,23 @@ map <F2> :%s/\s*$//g<cr>:noh<cr>''
 "Super paste
 ino <C-v> <esc>:set paste<cr>mui<C-R>+<esc>mv'uV'v=:set nopaste<cr>
 
-set background=dark "±³¾°É«
+set background=dark "èƒŒæ™¯è‰²
 color desert
-set ruler           "ÔÚ×óÏÂ½ÇÏÔÊ¾µ±Ç°ÎÄ¼şËùÔÚĞĞ
-set showcmd         "ÔÚ×´Ì¬À¸ÏÔÊ¾ÃüÁî
-set showmatch       "ÏÔÊ¾Æ¥ÅäµÄÀ¨ºÅ
-set ignorecase      "´óĞ¡Ğ´ÎŞ¹ØÆ¥Åä
-set smartcase       "Ö»ÄÜÆ¥Åä£¬¼´Ğ¡Ğ´È«Æ¥Åä£¬´óĞ¡Ğ´»ìºÏÔòÑÏ¸ñÆ¥Åä
-set report=0        "ÏÔÊ¾ĞŞ¸Ä´ÎÊı
-set number          "ĞĞºÅ
+set ruler           "åœ¨å·¦ä¸‹è§’æ˜¾ç¤ºå½“å‰æ–‡ä»¶æ‰€åœ¨è¡Œ
+set showcmd         "åœ¨çŠ¶æ€æ æ˜¾ç¤ºå‘½ä»¤
+set showmatch       "æ˜¾ç¤ºåŒ¹é…çš„æ‹¬å·
+set ignorecase      "å¤§å°å†™æ— å…³åŒ¹é…
+set smartcase       "åªèƒ½åŒ¹é…ï¼Œå³å°å†™å…¨åŒ¹é…ï¼Œå¤§å°å†™æ··åˆåˆ™ä¸¥æ ¼åŒ¹é…
+set report=0        "æ˜¾ç¤ºä¿®æ”¹æ¬¡æ•°
+set number          "è¡Œå·
 set fileencodings=ucs-bom,UTF-8,GBK,BIG5,latin1
 set fileencoding=UTF-8
-set fileformat=unix "»»ĞĞÊ¹ÓÃunix·½Ê½
-set noerrorbells    "²»ÏÔÊ¾ÏìÁå
-set visualbell      "¿ÉÊÓ»¯ÁåÉù
-set foldmarker={,}  "Ëõ½ø·ûºÅ
-set foldmethod=indent   "Ëõ½ø×÷ÎªÕÛµş±êÊ¶
-set foldlevel=100   "²»×Ô¶¯ÕÛµş
-set foldopen-=search    "ËÑË÷Ê±²»´ò¿ªÕÛµş
-set foldopen-=undo  "³·ÏúÊ±²»´ò¿ªÕÛµş
-set updatecount=0   "²»Ê¹ÓÃ½»»»ÎÄ¼ş
+set fileformat=unix "æ¢è¡Œä½¿ç”¨unixæ–¹å¼
+set noerrorbells    "ä¸æ˜¾ç¤ºå“é“ƒ
+set visualbell      "å¯è§†åŒ–é“ƒå£°
+set updatecount=0   "ä¸ä½¿ç”¨äº¤æ¢æ–‡ä»¶
 
-" ;hc highlight column
+" ;hc highlight columné«˜äº®å½“å‰åˆ—
 map <leader>hc :call SetColorColumn()<CR>
 function! SetColorColumn()
     let col_num = virtcol(".")
@@ -279,53 +270,38 @@ function! SetColorColumn()
     endif
 endfunction
 
-"Ëõ½ø¶¨Òå
+"ç¼©è¿›å®šä¹‰
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set expandtab
 set smarttab
 set lbr
-"ÏÔÊ¾TAB×Ö·ûÎª<+++
+"æ˜¾ç¤ºTABå­—ç¬¦ä¸º<+++
 set list
 set list listchars=tab:<+
 
-if has("gui_running")
-    set lines=25
-    set columns=80
-    set lazyredraw  "ÑÓ³ÙÖØ»æ
-    set guioptions-=m   "²»ÏÔÊ¾²Ëµ¥
-    set guioptions-=T   "²»ÏÔÊ¾¹¤¾ßÀ¸
-    set guifont=consolas\ 10
-endif
+set lazyredraw  "å»¶è¿Ÿé‡ç»˜
+set guioptions-=m   "ä¸æ˜¾ç¤ºèœå•
+set guioptions-=T   "ä¸æ˜¾ç¤ºå·¥å…·æ 
 
-"»Øµ½ÉÏ´ÎÎÄ¼ş´ò¿ªËùÔÚĞĞ
+"å›åˆ°ä¸Šæ¬¡æ–‡ä»¶æ‰“å¼€æ‰€åœ¨è¡Œ
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
             \| exe "normal g'\"" | endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => python
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set filetype=python
 au BufNewFile,BufRead *.py,*.pyw setf python
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => ctags
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let Tlist_Ctags_Cmd='$Vim/vim73/ctags.exe'
-set tags=tags; 
-set autochdir 
+au BufNewFile,BufRead *vimrc setf vim
 
 set helplang=cn
 
 set novisualbell
-set lines=30 
-set columns=118
+set lines=40
+set columns=140
 
-set guifont=Bitstream_Vera_Sans_Mono:h10:cANSI
 
-" [Òş²Ø|ÏÔÊ¾]²Ëµ¥À¸ ==> F5
-set guioptions-=m " Ä¬ÈÏÒş²Ø
+" [éšè—|æ˜¾ç¤º]èœå•æ  ==> F5
+set guioptions-=m " é»˜è®¤éšè—
 set guioptions-=T
 map <silent> <F5> :if &guioptions =~# 'T' <Bar>
             \set guioptions-=T <Bar>
@@ -338,30 +314,31 @@ map <silent> <F5> :if &guioptions =~# 'T' <Bar>
 call pathogen#infect()
 call pathogen#helptags()
 
-"When .vimrc is edited, reload it
 
-""""""""""""""""""""""""""""""
 " Tag list (ctags)
-""""""""""""""""""""""""""""""
-let Tlist_Ctags_Cmd = 'F:/dev/Vim/vim73/ctags.exe'
-let Tlist_Show_One_File = 1            "²»Í¬Ê±ÏÔÊ¾¶à¸öÎÄ¼şµÄtag£¬Ö»ÏÔÊ¾µ±Ç°ÎÄ¼şµÄ
-let Tlist_Exit_OnlyWindow = 1          "Èç¹ûtaglist´°¿ÚÊÇ×îºóÒ»¸ö´°¿Ú£¬ÔòÍË³övim
-"let Tlist_Use_Right_Window = 1         "ÔÚÓÒ²à´°¿ÚÖĞÏÔÊ¾taglist´°¿Ú
+let Tlist_Ctags_Cmd='ctags.exe'
+set tags=tags;
+set autochdir
+let Tlist_Ctags_Cmd = 'ctags.exe'
+let Tlist_Show_One_File = 1            "ä¸åŒæ—¶æ˜¾ç¤ºå¤šä¸ªæ–‡ä»¶çš„tagï¼Œåªæ˜¾ç¤ºå½“å‰æ–‡ä»¶çš„
+let Tlist_Exit_OnlyWindow = 1          "å¦‚æœtaglistçª—å£æ˜¯æœ€åä¸€ä¸ªçª—å£ï¼Œåˆ™é€€å‡ºvim
+"let Tlist_Use_Right_Window = 1         "åœ¨å³ä¾§çª—å£ä¸­æ˜¾ç¤ºtaglistçª—å£
+map <F3> :Tlist<cr>
 
-" Disable AutoComplPop. 
-let g:acp_enableAtStartup = 0 
-" Use neocomplcache. 
-let g:neocomplcache_enable_at_startup = 1 
-" Use smartcase. 
-let g:neocomplcache_enable_smart_case = 1 
-" Use camel case completion. 
-let g:neocomplcache_enable_camel_case_completion = 1 
-" Use underbar completion. 
-let g:neocomplcache_enable_underbar_completion = 1 
-" Set minimum syntax keyword length. 
-let g:neocomplcache_min_syntax_length = 3 
-let g:neocomplcache_lock_buffer_name_pattern = '*ku*' 
-" Define dictionary. 
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+let g:neocomplcache_enable_underbar_completion = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '*ku*'
+" Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists={'default' : '', 'vimshell' : $HOME.'/.vimshell_hist', 'scheme' : $HOME.'/.gosh_completions'}
 
 
@@ -391,59 +368,59 @@ let g:pymode_lint = 1
 " Can have multiply values "pep8,pyflakes,mcccabe"
 let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
 
-"zcÊÇÕÛµş´úÂëµÄÃüÁî£¬zoÊÇÕ¹¿ª´úÂë,shift+k£¬²é¿´¹â±ê´¦µÄº¯ÊıµÄÎÄµµ
-" µ«ÊÇpymodeÌá¹©µÄÕÛµşºÃÏñÓĞÎÊÌâ£¬½«Æä½ûÓÃ£¬ÓÃpython_edit.vim´úÌæ
+"zcæ˜¯æŠ˜å ä»£ç çš„å‘½ä»¤ï¼Œzoæ˜¯å±•å¼€ä»£ç ,shift+kï¼ŒæŸ¥çœ‹å…‰æ ‡å¤„çš„å‡½æ•°çš„æ–‡æ¡£
+" ä½†æ˜¯pymodeæä¾›çš„æŠ˜å å¥½åƒæœ‰é—®é¢˜ï¼Œå°†å…¶ç¦ç”¨ï¼Œç”¨python_edit.vimä»£æ›¿
 let pymode_folding = 0
 
-" pymodeµÄÌø×ªµ½º¯Êı¶¨Òå´¦Ctrl c·Å¿ªºó°´g£¬ÖØĞÂ¶¨ÒåÎªCtrl gÁË
+" pymodeçš„è·³è½¬åˆ°å‡½æ•°å®šä¹‰å¤„Ctrl cæ”¾å¼€åæŒ‰gï¼Œé‡æ–°å®šä¹‰ä¸ºCtrl gäº†
 map <C-g> <C-c>g
 
-" ×Ô¶¯import g:pymode_rope_autoimport_modulesÖĞ¶¨ÒåµÄµ«ÊÇµ±Ç°pyÎÄ¼ş»¹Ã»ÓĞimportµÄ
+" è‡ªåŠ¨import g:pymode_rope_autoimport_modulesä¸­å®šä¹‰çš„ä½†æ˜¯å½“å‰pyæ–‡ä»¶è¿˜æ²¡æœ‰importçš„
 map <leader>im :RopeAutoImport<cr>
 
 " django
 "au FileType python set ft=python.django
 "au FileType html set ft=htmldjango.html
 
-"ÏÔÊ¾ÁËpythonÎÄµµ²¢Íê³ÉÑ¡Ôñºó£¬´°¿Ú¹Ø±Õ
+"æ˜¾ç¤ºäº†pythonæ–‡æ¡£å¹¶å®Œæˆé€‰æ‹©åï¼Œçª—å£å…³é—­
 autocmd CursorMovedI *  if pumvisible() == 0|silent! pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
-" Ëõ½øÏß
-let g:indent_guides_guide_size=1 "¿í¶ÈÎª1
+" ç¼©è¿›çº¿
+let g:indent_guides_guide_size=1 "å®½åº¦ä¸º1
 
-" ¸ñÊ½»¯js´úÂë
+" æ ¼å¼åŒ–jsä»£ç 
 nnoremap <silent> <leader>js :call g:Jsbeautify()<cr>
 
-" tab×ª»»Îª4¸ö¿Õ¸ñtab to space
+" tabè½¬æ¢ä¸º4ä¸ªç©ºæ ¼tab to space
 map <leader>t2s :%s/<tab>/    /g<cr>
 
-" > <·ûºÅËõ½ø
+" > <ç¬¦å·ç¼©è¿›
 vnoremap < <gv
 vnoremap > >gv
 
-set cc=79 " ×î´ó¿í¶È set colorcolumn=79
-set fo+=m " ÖĞÎÄ40¸ö×ÖÌõ
+set cc=79 " æœ€å¤§å®½åº¦ set colorcolumn=79
+set fo+=m " ä¸­æ–‡40ä¸ªå­—æ¡
 set tw=79
 
-" ;ig¸ßÁÁµ±Ç°ÁĞ
+" ;igé«˜äº®å½“å‰åˆ—
 
-" µÚ79ÁĞ¸ßÁÁÑÕÉ«
+" ç¬¬79åˆ—é«˜äº®é¢œè‰²
 highlight ColorColumn guibg=DarkGray
 highlight ColorColumn ctermbg=DarkGray
 
 
-" python_editing.vim 
-" FÕÛµşµ±Ç°ÎÄ¼şµÄPython´úÂë£¬fÕÛµş¹â±êËùÔÚº¯Êı£¨Àà£©µÄ´úÂë
-" ³õÊ¼»¯ÕÛµşËùÓĞ´úÂë
+" python_editing.vim
+" FæŠ˜å å½“å‰æ–‡ä»¶çš„Pythonä»£ç ï¼ŒfæŠ˜å å…‰æ ‡æ‰€åœ¨å‡½æ•°ï¼ˆç±»ï¼‰çš„ä»£ç 
+" åˆå§‹åŒ–æŠ˜å æ‰€æœ‰ä»£ç 
 call ToggleFold()
 
 
 " ctrlp.vim
 " https://github.com/kien/ctrlp.vim.git
-" ctrl+p´ò¿ªÎÄ¼şµ¼º½´°¿Ú
-" ÔÚµ¼º½´°¿ÚÄÚCtrl v×İÏòÇĞ·Ö´ò¿ª£¬<C-t>ĞÂ±êÇ©´ò¿ª
-" Èç¹û¸Ä±äÁËÏÂÃæµÄ¹ıÂËÎÄ¼şÃûÒªÖ´ĞĞÒ»ÏÂ:ClearAllCtrlPCaches
+" ctrl+pæ‰“å¼€æ–‡ä»¶å¯¼èˆªçª—å£
+" åœ¨å¯¼èˆªçª—å£å†…Ctrl vçºµå‘åˆ‡åˆ†æ‰“å¼€ï¼Œ<C-t>æ–°æ ‡ç­¾æ‰“å¼€
+" å¦‚æœæ”¹å˜äº†ä¸‹é¢çš„è¿‡æ»¤æ–‡ä»¶åè¦æ‰§è¡Œä¸€ä¸‹:ClearAllCtrlPCaches
 noremap <C-W><C-U> :CtrlPMRU<CR>
 nnoremap <C-W>u :CtrlPMRU<CR>
 let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$\|.rvm$\|\.wsgic$\|\.gif$\|\.png$\|\.jpg$\|\.bmp$\|\.pyc$\|\.pyo$'
@@ -455,8 +432,8 @@ let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
 
 
-" ctagsÌø×ª
-" <C-]>º¯Êı¶¨Òå´¦ <C-t>·µ»Ø <C-o>
+" ctagsè·³è½¬
+" <C-]>å‡½æ•°å®šä¹‰å¤„ <C-t>è¿”å› <C-o>
 
 " latex
 set shellslash
@@ -465,26 +442,36 @@ let g:tex_flavor='latex'
 
 " python
 map [r :w <CR>:! python % <CR>
-map [o :! python -i % <CR>
-map [t :! rst2html.py % %<.html <CR>
 
-" ´ò¿ª¼Ä´æÆ÷
-map <leader>r :reg<cr>
-" pymodeÄ¬ÈÏµÄ<leader>rÎªÔËĞĞµ±Ç°pyÎÄ¼ş£¬ËùÒÔĞŞ¸ÄÒ»ÏÂ
+" æ‰“å¼€å¯„å­˜å™¨:reg<cr>
+
+" pymodeé»˜è®¤çš„<leader>rä¸ºè¿è¡Œå½“å‰pyæ–‡ä»¶ï¼Œæ‰€ä»¥ä¿®æ”¹ä¸€ä¸‹
 let g:pymode_run_key = '<leader>py'
 
 " zencoding
 map <leader>z <c-y>,
-" powerline ÏÔÊ¾¾ø¶ÔÈ«Â·¾¶
+" powerline æ˜¾ç¤ºç»å¯¹å…¨è·¯å¾„
 let g:Powerline_stl_path_style = 'full'
 
-" ×Ô¶¯Íê³É[tab]¼ü
-" Enable omni completion. 
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete 
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
+" è‡ªåŠ¨å®Œæˆ[tab]é”®
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-set guioptions-=L " Òş²Ø×ó²à¹ö¶¯Ìõ 
-set guioptions-=r " Òş²ØÓÒ²à¹ö¶¯Ìõ
+set guioptions-=L " éšè—å·¦ä¾§æ»šåŠ¨æ¡
+set guioptions-=r " éšè—å³ä¾§æ»šåŠ¨æ¡
+
+" ä»¥ä¸åŒçš„å½©è‰²marké«˜äº®å•è¯
+"http://www.vim.org/scripts/script.php?script_id=2666
+" ;mé«˜äº®å½“å‰å•è¯
+" ;nå¦‚æœå…‰æ ‡å¤„æœ‰é«˜äº®é‚£ä¹ˆå–æ¶ˆæ­¤å•è¯çš„é«˜äº®ï¼Œå¦‚æœæ²¡æœ‰é‚£ä¹ˆå°†ä¼šå–æ¶ˆæ‰€æœ‰å•è¯çš„é«˜äº®
+" æ ‡è®°é¢œè‰²ä¹‹åä¼šé»˜è®¤ä¸ºæœç´¢æ­¤å•è¯ï¼Œæ‰€ä»¥#å’Œ*çš„æ—¶å€™ä¼šé’ˆå¯¹æ­¤å•è¯
+" ä½¿ç”¨18ç§é¢œè‰²
+let g:mwDefaultHighlightingPalette = 'extended'
+" ä½¿ç”¨æ›´å¤šçš„é¢œè‰²(ä¸€èˆ¬æ²¡æœ‰è¿™ä¸ªå¿…è¦äº†...)
+"let g:mwDefaultHighlightingPalette = 'maximum'
+" åªé«˜äº®9ä¸ªå•è¯
+"let g:mwDefaultHighlightingNum = 9
