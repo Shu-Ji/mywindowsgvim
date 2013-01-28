@@ -322,7 +322,7 @@ set autochdir
 let Tlist_Ctags_Cmd = 'ctags.exe'
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
-"let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
+let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
 map <F3> :Tlist<cr>
 
 " Disable AutoComplPop.
@@ -475,3 +475,9 @@ let g:mwDefaultHighlightingPalette = 'extended'
 "let g:mwDefaultHighlightingPalette = 'maximum'
 " 只高亮9个单词
 "let g:mwDefaultHighlightingNum = 9
+
+"jinja
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set ft=jinja
+
+" 将jj做为esc，因为自动提示好像有问题，所以这里按了3下esc
+imap jj <esc><esc><esc>
